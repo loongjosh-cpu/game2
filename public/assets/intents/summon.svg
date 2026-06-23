@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+<defs>
+
+<filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+  <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#050509" flood-opacity=".45"/>
+</filter>
+</defs>
+
+<rect x="10" y="10" width="108" height="108" rx="30" fill="#1d1d25" stroke="#9a78d3" stroke-width="6"/>
+<circle cx="64" cy="64" r="36" fill="#9a78d3" fill-opacity=".2"/>
+<text x="64" y="80" text-anchor="middle" font-family="Georgia, serif" font-size="48" font-weight="800" fill="#fff4c7">♟</text>
+
+</svg>

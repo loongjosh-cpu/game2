@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="768" viewBox="0 0 512 768" fill="none">
+<defs>
+<linearGradient id="back" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#312236"/><stop offset=".55" stop-color="#172033"/><stop offset="1" stop-color="#0f1016"/></linearGradient>
+<filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+  <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#050509" flood-opacity=".45"/>
+</filter>
+</defs>
+
+<rect width="512" height="768" rx="38" fill="#181720"/>
+<rect x="22" y="22" width="468" height="724" rx="30" fill="url(#back)" stroke="#d9a746" stroke-width="8"/>
+<rect x="62" y="62" width="388" height="644" rx="20" stroke="#f1d17a" stroke-opacity=".45" stroke-width="4"/>
+<path d="M256 154 L338 302 L256 614 L174 302 Z" fill="#111018" stroke="#f1d17a" stroke-width="8"/>
+<circle cx="256" cy="384" r="86" fill="#b9414b" fill-opacity=".18" stroke="#d9a746" stroke-width="6"/>
+<path d="M214 384 C214 332 256 300 256 300 C256 300 298 332 298 384 C298 434 256 468 256 468 C256 468 214 434 214 384 Z" fill="#f1d17a"/>
+
+</svg>

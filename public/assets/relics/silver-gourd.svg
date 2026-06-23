@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" fill="none">
+<defs>
+
+<filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+  <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#050509" flood-opacity=".45"/>
+</filter>
+</defs>
+
+<rect x="22" y="22" width="212" height="212" rx="42" fill="#1b1a22" stroke="#d9a746" stroke-width="8" filter="url(#softShadow)"/>
+<circle cx="128" cy="128" r="76" fill="#9a78d3" fill-opacity=".2" stroke="#9a78d3" stroke-width="6"/>
+
+<path d="M128 58 C156 72 154 104 138 118 C176 128 190 178 160 204 C140 222 102 222 84 204 C54 178 70 128 108 118 C92 104 100 72 128 58 Z" fill="#f1d17a" stroke="#d9a746" stroke-width="6"/>
+
+
+
+</svg>

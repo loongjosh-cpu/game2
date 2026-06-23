@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024" fill="none">
+<defs>
+
+<filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+  <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#050509" flood-opacity=".45"/>
+</filter>
+</defs>
+
+<rect width="768" height="1024" fill="none"/>
+<ellipse cx="384" cy="900" rx="202.4" ry="54" fill="#050509" fill-opacity=".36"/>
+<path d="M198 840 C220 650 278 552 384 552 C490 552 548 650 570 840 Z" fill="#20232d" stroke="#d9a746" stroke-width="10" filter="url(#softShadow)"/>
+<path d="M252 604 C286 514 318 480 384 480 C450 480 482 514 516 604 C486 646 440 668 384 668 C328 668 282 646 252 604 Z" fill="#576d5a" fill-opacity=".8" stroke="#f1d17a" stroke-width="8"/>
+<path d="M272 438 C286 292 322 214 384 214 C446 214 482 292 496 438 C468 510 430 544 384 544 C338 544 300 510 272 438 Z" fill="#7a4d54" fill-opacity=".92" stroke="#d9a746" stroke-width="10"/>
+
+<circle cx="334" cy="396" r="14" fill="#fff4c7"/>
+<circle cx="434" cy="396" r="14" fill="#fff4c7"/>
+<path d="M330 462 Q384 500 438 462" stroke="#fff4c7" stroke-width="10" stroke-linecap="round"/>
+<path d="M190 290 C270 218 498 218 578 290" stroke="#d9a746" stroke-opacity=".32" stroke-width="8"/>
+<path d="M178 808 C290 754 478 754 590 808" stroke="#576d5a" stroke-width="8" stroke-opacity=".45"/>
+<circle cx="384" cy="716" r="74" fill="#111018" stroke="#f1d17a" stroke-width="8"/>
+<text x="384" y="742" text-anchor="middle" font-family="Georgia, serif" font-size="76" font-weight="700" fill="#fff4c7">♟</text>
+<text x="384" y="944" text-anchor="middle" font-family="Georgia, serif" font-size="38" font-weight="700" fill="#f1d17a">战鼓旗手</text>
+
+</svg>
