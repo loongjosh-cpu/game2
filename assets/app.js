@@ -24228,6 +24228,12 @@ var DreamPokerApp = (() => {
   function countSummons(enemy) {
     return liveEnemies().filter((unit) => unit.summonedBy === enemy.id).length;
   }
+  function enemyIntentAttack(enemy) {
+    return enemy ? enemy.attack + getEnemyAttackFlat(enemy) : 0;
+  }
+  function enemyIntentAttackDamage(enemy, intent, fallbackMultiplier = 1) {
+    return ceil(enemyIntentAttack(enemy) * (intent.multiplier || fallbackMultiplier));
+  }
   function describeIntent(skill, enemy) {
     switch (skill.type) {
       case "guard":
@@ -24235,7 +24241,7 @@ var DreamPokerApp = (() => {
       case "guardAll":
         return { ...skill, text: `全体获得${intentShield(skill, enemy)}护盾` };
       case "guardAttack":
-        return { ...skill, text: `获得${intentShield(skill, enemy)}护盾并攻击 ${enemy.attack}` };
+        return { ...skill, text: `伤害约${enemyIntentAttackDamage(enemy, skill)}，获得${intentShield(skill, enemy)}护盾` };
       case "guardAttackBuff":
         return { ...skill, text: `防御姿态并攻击+${ceil(enemy.attack * (skill.attackRatio || 0.5))}` };
       case "defenseStance":
@@ -24261,13 +24267,13 @@ var DreamPokerApp = (() => {
       case "weakenAttack":
         return { ...skill, text: `角色攻击-${skill.amount}` };
       case "weakenDefense":
-        return { ...skill, text: `攻击并降低防御 ${skill.amount}` };
+        return { ...skill, text: `伤害约${enemyIntentAttackDamage(enemy, skill)}，降防${skill.amount}` };
       case "attackWeakenDefenseByAttack":
-        return { ...skill, text: `攻击并降低防御 ${ceil(enemy.attack * (skill.ratio || 1))}` };
+        return { ...skill, text: `伤害约${enemyIntentAttackDamage(enemy, skill)}，降防${ceil(enemyIntentAttack(enemy) * (skill.ratio || 1))}` };
       case "attackCleanseHeroBuff":
-        return { ...skill, text: "攻击并清除角色1个增益" };
+        return { ...skill, text: `伤害约${enemyIntentAttackDamage(enemy, skill)}，清除1个增益` };
       case "attackSlow":
-        return { ...skill, text: `攻击${skill.multiplier ? ` ${Math.round(skill.multiplier * 100)}%` : ""}并速度${skill.amount}` };
+        return { ...skill, text: `伤害约${enemyIntentAttackDamage(enemy, skill)}，速度${skill.amount}` };
       case "pierceAttack":
         return { ...skill, text: `穿甲攻击 ${enemy.attack}` };
       case "chargedAttack":
@@ -24277,7 +24283,7 @@ var DreamPokerApp = (() => {
       case "defenseAttack":
         return { ...skill, text: `防御攻击 ${ceil(enemy.defense * (skill.ratio || 1))}` };
       case "drain":
-        return { ...skill, text: `攻击并吸取 ${ceil(enemy.attack * skill.ratio)}` };
+        return { ...skill, text: `伤害约${enemyIntentAttackDamage(enemy, skill)}，恢复${ceil(enemyIntentAttack(enemy) * skill.ratio)}` };
       case "speedBuff":
         return { ...skill, text: `速度+${skill.amount}` };
       case "cleanseAlly":
@@ -27405,7 +27411,7 @@ var DreamPokerApp = (() => {
       case "chargedAttack":
         return `对持牌人造成蓄力攻击，基础伤害约为 ${ceil(attack * (intent.multiplier || 1))}。`;
       case "pierceAttack":
-        return `对持牌人攻击1次，并按 ${pct(intent.pierce)} 穿透防御。`;
+        return `对持牌人攻击1次，基础伤害约 ${ceil(attack * (intent.multiplier || 1))}，并按 ${pct(intent.pierce)} 穿透防御。`;
       case "speedHeavyAttack":
         return `行动时先获得速度 +${intent.speed || 0}，再造成约 ${ceil(attack * (intent.multiplier || 1))} 基础伤害。`;
       case "guard":
@@ -27413,7 +27419,7 @@ var DreamPokerApp = (() => {
       case "guardAll":
         return `敌方全体获得 ${shield} 护盾。`;
       case "guardAttack":
-        return `自身获得 ${shield} 护盾，并对持牌人攻击1次。`;
+        return `自身获得 ${shield} 护盾，并对持牌人攻击1次，基础伤害约 ${ceil(attack * (intent.multiplier || 1))}。`;
       case "guardAttackBuff":
         return `进入防御姿态，本回合受伤降低，并提升自身攻击 ${ceil(attack * (intent.attackRatio || 0.5))}。`;
       case "defenseStance":
@@ -27447,11 +27453,11 @@ var DreamPokerApp = (() => {
       case "weakenAttack":
         return `使持牌人攻击 -${intent.amount || 0}。`;
       case "weakenDefense":
-        return `先攻击1次，然后永久降低持牌人防御 ${intent.amount || 0}。`;
+        return `先攻击1次，基础伤害约 ${ceil(attack * (intent.multiplier || 1))}，然后永久降低持牌人防御 ${intent.amount || 0}。`;
       case "attackWeakenDefenseByAttack":
-        return `先攻击1次，下回合开始使持牌人防御 -${ceil(attack * (intent.ratio || 1))}，持续 ${intent.duration || 2} 回合。`;
+        return `先攻击1次，基础伤害约 ${ceil(attack * (intent.multiplier || 1))}；下回合开始使持牌人防御 -${ceil(attack * (intent.ratio || 1))}，持续 ${intent.duration || 2} 回合。`;
       case "attackCleanseHeroBuff":
-        return "先攻击1次，然后清除持牌人1个可清除增益。";
+        return `先攻击1次，基础伤害约 ${ceil(attack * (intent.multiplier || 1))}，然后清除持牌人1个可清除增益。`;
       case "attackSlow":
         return `攻击1次，基础伤害约 ${ceil(attack * (intent.multiplier || 1))}，并使持牌人速度 ${intent.amount}，下回合开始。`;
       case "slowHero":
@@ -27469,7 +27475,7 @@ var DreamPokerApp = (() => {
       case "guardLowest":
         return `给护盾最低的敌方单位 ${ceil(defense * (intent.shieldByDef || 0.5))} 护盾。`;
       case "drain":
-        return `攻击1次，并恢复 ${ceil(attack * intent.ratio)} 生命。`;
+        return `攻击1次，基础伤害约 ${ceil(attack * (intent.multiplier || 1))}，并恢复 ${ceil(attack * intent.ratio)} 生命。`;
       case "hpScaledAttack":
         return `按自身当前生命造成压制攻击，基础伤害约 ${ceil(attack * enemy.hp * (intent.ratio || 0.1))}。`;
       case "defenseAttack":
@@ -27477,7 +27483,7 @@ var DreamPokerApp = (() => {
       case "clearHeroBuff":
         return `清除持牌人1个可清除增益${intent.healRatio ? `，若成功则自身恢复 ${pct(intent.healRatio)} 最大生命` : ""}。`;
       case "focusTax":
-        return "若持牌人有调度点，则调度点 -1；否则改为造成一次较高伤害。";
+        return `若持牌人有调度点，则调度点 -1；否则改为造成一次较高伤害，基础伤害约 ${ceil(attack * 1.5)}。`;
       case "sealLastHand":
         return state.battle?.lastHandName ? `封锁上回合牌型「${state.battle.lastHandName}」，下回合再次打出该牌型会被削弱。` : "尝试封锁上回合牌型；当前没有可封锁牌型时效果较弱。";
       case "executeDebuff":
