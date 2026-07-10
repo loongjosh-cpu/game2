@@ -21734,7 +21734,7 @@ var DreamPokerApp = (() => {
   });
 
   // src/data.js
-  var SUITS, RANKS, RANK_ORDER, RANK_VALUE, HAND_ORDER, RELICS, MONSTERS, ELITES, BOSSES, EVENTS;
+  var SUITS, RANKS, RANK_ORDER, RANK_VALUE, HAND_ORDER, RELICS, MONSTERS, NORMAL_ENCOUNTERS, ELITES, BOSSES, EVENTS;
   var init_data = __esm({
     "src/data.js"() {
       "use strict";
@@ -21753,7 +21753,7 @@ var DreamPokerApp = (() => {
         { id: "heart-scepter", name: "红桃权杖", rarity: "rare", text: "非完整红桃花色且打出的5张牌含有4张红桃时，视为触发红桃完整花色效果，但不额外重复触发。" },
         { id: "spade-crown", name: "黑桃皇冠", rarity: "common", text: "打出的牌型包含3张及以上黑桃时，获得速度+1的增益状态，战斗内永久生效，可清除，可叠层。" },
         { id: "spade-scepter", name: "黑桃权杖", rarity: "rare", text: "非完整黑桃花色且打出的5张牌含有4张黑桃时，视为触发黑桃完整花色效果，但不额外重复触发。" },
-        { id: "diamond-crown", name: "方片皇冠", rarity: "rare", text: "打出的牌型包含3张及以上方片时，恢复1点调度点。每场战斗最多触发2次。" },
+        { id: "diamond-crown", name: "方片皇冠", rarity: "rare", text: "打出的牌型包含3张及以上方片时，本回合造成的牌型攻击伤害+20%。" },
         { id: "diamond-scepter", name: "方片权杖", rarity: "rare", text: "非完整方片花色且打出的5张牌含有4张方片时，视为触发方片完整花色效果，但不额外重复触发。" },
         { id: "club-crown", name: "梅花皇冠", rarity: "rare", text: "打出的牌型包含3张及以上梅花时，下回合第一次对主目标造成牌型攻击伤害后，额外造成其最大生命值10%的固定伤害。" },
         { id: "club-scepter", name: "梅花权杖", rarity: "rare", text: "非完整梅花花色且打出的5张牌含有4张梅花时，视为触发梅花完整花色效果，但不额外重复触发。" },
@@ -21827,15 +21827,31 @@ var DreamPokerApp = (() => {
         { name: "三连剪影", hp: [8, 10], atk: [4, 5], def: [0, 0], speed: 3, skills: [{ type: "multiAttack", hits: 3 }, { type: "guardAttackBuff", reduction: 0.5, attackRatio: 0.5 }] },
         { name: "战鼓旗手", hp: [30, 35], atk: [2, 3], def: [10, 10], speed: 3, skills: [{ type: "defenseStance", reduction: 0.6 }, { type: "teamAttackBuffFlat" }, { type: "weakenAttack", amount: 2 }] },
         { name: "涂色守卫", hp: [15, 18], atk: [5, 6], def: [30, 30], speed: 3, skills: [{ type: "attack" }, { type: "growDefense", ratio: 0.5 }, { type: "healSelfMax", ratio: 0.2 }] },
-        { name: "红墨医师", hp: [10, 15], atk: [5, 6], def: [0, 0], speed: 3, skills: [{ type: "healAllyByAttack" }] },
-        { name: "重铠牌兵", hp: [40, 45], atk: [2, 3], def: [20, 20], speed: 2, skills: [{ type: "attack" }] },
+        { name: "红墨医师", hp: [10, 15], atk: [6, 8], def: [0, 0], speed: 3, skills: [{ type: "healAllyByAttack" }] },
+        { name: "重铠牌兵", hp: [40, 45], atk: [6, 7], def: [20, 20], speed: 2, skills: [{ type: "attack" }] },
         { name: "滞速纸偶", hp: [12, 16], atk: [3, 4], def: [5, 5], speed: 3, skills: [{ type: "attackSlow", amount: -1, duration: 1 }, { type: "chargedAttack", multiplier: 2.5 }] },
         { name: "护牌侍从", hp: [18, 22], atk: [2, 3], def: [15, 15], speed: 2, skills: [{ type: "attack" }, { type: "guardLowest", shieldByDef: 0.5 }, { type: "defenseStance", reduction: 0.5 }] },
-        { name: "镜面甲虫", hp: [25, 30], atk: [1, 2], def: [20, 20], speed: 3, traits: [{ type: "gainAttackOnHit", amount: 1 }], skills: [{ type: "attack" }, { type: "defenseStance", reduction: 0.6 }] },
+        { name: "镜面甲虫", hp: [25, 30], atk: [6, 7], def: [20, 20], speed: 3, traits: [{ type: "gainAttackOnHit", amount: 1 }], skills: [{ type: "attack" }, { type: "defenseStance", reduction: 0.6 }] },
         { name: "催牌小丑", hp: [14, 18], atk: [4, 5], def: [5, 5], speed: 3, skills: [{ type: "attack" }, { type: "allyAttackBuffHalf" }] },
         { name: "吸墨影", hp: [16, 20], atk: [6, 7], def: [10, 10], speed: 2, skills: [{ type: "drain", ratio: 0.5 }, { type: "healSelfMax", ratio: 0.2 }] },
         { name: "清场管家", hp: [18, 22], atk: [3, 4], def: [10, 10], speed: 2, skills: [{ type: "attack" }, { type: "cleanseSelfShield", shieldByDef: 0.3 }] },
         { name: "封套术士", hp: [12, 16], atk: [4, 5], def: [5, 5], speed: 4, skills: [{ type: "attackWeakenDefenseByAttack", ratio: 0.5, duration: 2 }, { type: "rerollTaxNext" }] }
+      ];
+      NORMAL_ENCOUNTERS = [
+        { id: "single-sentry", minLayer: 1, maxLayer: 1, weight: 4, enemies: ["纸牌哨兵"] },
+        { id: "single-heavy", minLayer: 1, maxLayer: 2, weight: 2, enemies: ["重铠牌兵"] },
+        { id: "pressure-pair", minLayer: 1, weight: 5, enemies: ["纸牌哨兵", "催牌小丑"] },
+        { id: "delay-pair", minLayer: 1, weight: 4, enemies: ["滞速纸偶", "纸牌哨兵"] },
+        { id: "guard-front", minLayer: 1, weight: 4, enemies: ["护牌侍从", "纸牌哨兵"] },
+        { id: "healer-front", minLayer: 2, weight: 5, enemies: ["护牌侍从", "红墨医师"] },
+        { id: "banner-strike", minLayer: 2, weight: 5, enemies: ["战鼓旗手", "三连剪影"] },
+        { id: "seal-delay", minLayer: 2, weight: 4, enemies: ["封套术士", "滞速纸偶"] },
+        { id: "painted-jester", minLayer: 2, weight: 3, enemies: ["涂色守卫", "催牌小丑"] },
+        { id: "armor-heal", minLayer: 3, weight: 4, enemies: ["重铠牌兵", "红墨医师"] },
+        { id: "mirror-pressure", minLayer: 3, weight: 4, enemies: ["镜面甲虫", "三连剪影"] },
+        { id: "banner-wall", minLayer: 3, weight: 3, enemies: ["战鼓旗手", "重铠牌兵"] },
+        { id: "control-front", minLayer: 4, weight: 4, enemies: ["护牌侍从", "封套术士"] },
+        { id: "cleanse-drain", minLayer: 4, weight: 3, enemies: ["清场管家", "吸墨影"] }
       ];
       ELITES = [
         { name: "双面审查官", hp: [20, 25], atk: [10, 11], def: [0, 0], speed: 4, traits: [{ type: "roundEndAttack", amount: 1 }], skills: [{ type: "multiAttack", hits: 2, multiplier: 1.2 }, { type: "drain", ratio: 0.5 }] },
@@ -22478,6 +22494,7 @@ var DreamPokerApp = (() => {
     onPickSuggestion,
     onReroll,
     onOpenTempConsume,
+    onOpenRules,
     onClear
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)(import_jsx_runtime3.Fragment, { children: [
@@ -22485,7 +22502,8 @@ var DreamPokerApp = (() => {
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { "data-play": true, disabled: !canPlay, onClick: onPlay, children: "确认出牌" }),
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { "data-pick-suggestion": true, onClick: onPickSuggestion, children: "选择建议" }),
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { "data-reroll": true, disabled: !canReroll, onClick: onReroll, children: "调度重抽选中3张" }),
-        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { "data-open-temp-consume": true, title: tempHint, disabled: !canTempConsume, onClick: onOpenTempConsume, children: "一次性补牌" }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { "data-open-temp-consume": true, title: tempHint, onClick: onOpenTempConsume, children: "一次性补牌" }),
+        /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { className: "rules-button", "data-detail-rules": true, onClick: onOpenRules, children: "战斗规则" }),
         /* @__PURE__ */ (0, import_jsx_runtime3.jsx)("button", { "data-clear": true, onClick: onClear, children: "清除选择" })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime3.jsxs)("p", { className: "battle-action-hint", children: [
@@ -22937,7 +22955,8 @@ var DreamPokerApp = (() => {
     onLeave,
     onBuyRelic,
     onBuyPack,
-    onSellPack
+    onSellPack,
+    sellPackRewardText
   }) {
     return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("section", { className: "panel outgame-panel", children: [
       /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "page-head", children: [
@@ -23019,12 +23038,12 @@ var DreamPokerApp = (() => {
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "section-head", children: [
         /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("h3", { children: "出售未开卡包" }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "统一 +1 Joker" })
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: sellPackRewardText })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "shop-grid pack-shop", children: sellablePacks.length ? sellablePacks.map((pack) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("button", { className: "shop-slot", "data-sell-pack": pack.id, onClick: () => onSellPack(pack.id), children: [
         /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("strong", { children: pack.label }),
         /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { children: "出售未开卡包" }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("em", { children: "+1 Joker" })
+        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("em", { children: pack.sellRewardText })
       ] }, pack.id)) : /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("p", { className: "small", children: "暂无可出售卡包。" }) })
     ] });
   }
@@ -23038,7 +23057,7 @@ var DreamPokerApp = (() => {
   });
 
   // src/ui/shell.tsx
-  function TopbarView({ visible, seed, layer, nodeCount, stats, onOpenGuide, onSave }) {
+  function TopbarView({ visible, seed, layer, nodeCount, stats, guideLabel = "规则速览", onOpenGuide, onSave }) {
     if (!visible) return null;
     return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("header", { className: "topbar", children: [
       /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "title", children: [
@@ -23058,7 +23077,7 @@ var DreamPokerApp = (() => {
           " ",
           /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("strong", { children: stat.value })
         ] }, stat.label)),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { "data-open-guide": true, onClick: onOpenGuide, children: "规则速览" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { "data-open-guide": true, onClick: onOpenGuide, children: guideLabel }),
         /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { "data-save": true, onClick: onSave, children: "保存" })
       ] })
     ] });
@@ -23145,8 +23164,7 @@ var DreamPokerApp = (() => {
         /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("button", { "data-open-packs": true, disabled: !canUseOutgameInventory, onClick: onOpenPacks, children: [
           "卡包 ",
           hero.packs
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { "data-open-guide": true, onClick: onOpenGuide, children: "规则" })
+        ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "inventory-list", children: packTags.length ? packTags.map((pack) => /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("button", { className: "tag", "data-open-pack": pack.id, disabled: !canUseOutgameInventory, onClick: () => onOpenPack(pack.id), children: pack.label }, pack.id)) : /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("span", { className: "small", children: "暂无卡包" }) }),
       /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "side-section-head", children: [
@@ -23195,7 +23213,7 @@ var DreamPokerApp = (() => {
       /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "page-head", children: [
         /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { children: [
           /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h2", { children: "制牌室" }),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "small", children: "升级卡牌，或消耗3张多余牌制作1张当前层UP牌。" })
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "small", children: "进入制牌室首次获得2个锻造锤；锻造锤可在大背包中升级卡牌，不消耗重复牌。" })
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "page-resources", children: [
           /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
@@ -23219,6 +23237,14 @@ var DreamPokerApp = (() => {
         ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(SceneBanner, { src: sceneSrc, compact: true }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "forge-help", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("img", { className: "resource-icon", src: forgeHammerSrc, alt: "", "aria-hidden": "true" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
+          "锻造锤：在大背包点击“锻造升级”后使用，每消耗1个锻造锤使1张已拥有卡牌升1级；不需要重复卡牌，最高等级受卡牌上限限制。当前拥有 ",
+          forgeHammers,
+          " 个。"
+        ] })
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "section-head", children: [
         /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { children: "制牌" }),
         /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { children: [
@@ -23412,8 +23438,10 @@ var DreamPokerApp = (() => {
       upgradeRoomClaims: [],
       wildCardFreeUpgrades: 0,
       freeTraverse: 0,
+      sideRouteUsedLayers: [],
       scoutSteps: 0,
       upgradeCount: 0,
+      bloodthirstySaberStacks: 0,
       hero: {
         maxHp: 20,
         hp: 20,
@@ -23521,6 +23549,7 @@ var DreamPokerApp = (() => {
     state.run.wornBackpackSoldLayers ??= [];
     state.run.forgeHammers = Math.max(0, Math.floor(Number(state.run.forgeHammers) || 0));
     state.run.upgradeRoomClaims ??= [];
+    state.run.bloodthirstySaberStacks = Math.max(0, Math.min(10, Math.floor(Number(state.run.bloodthirstySaberStacks) || 0)));
     state.run.wildCardFreeUpgrades = Math.max(0, Math.floor(Number(state.run.wildCardFreeUpgrades) || 0));
     state.run.upgradeCount = Math.max(0, Math.floor(Number(state.run.upgradeCount) || 0));
     state.run.hero ??= {};
@@ -23643,6 +23672,19 @@ var DreamPokerApp = (() => {
     const nodes = run.map.cols[run.currentCol] || [];
     return nodes.find((node) => node.id === run.currentNodeId) || [...nodes].reverse().find((node) => node.done) || null;
   }
+  function currentParallelLinkTo(node) {
+    const currentNode = currentMapNode();
+    return currentNode?.links?.find((item) => item.to === node.id && item.parallel) || null;
+  }
+  function hasSideRouteFreeTraverse() {
+    const run = state.run;
+    if (!run) return false;
+    run.sideRouteUsedLayers ||= [];
+    return hasRelic("side-route-map") && !run.sideRouteUsedLayers.includes(run.layer);
+  }
+  function hasFreeParallelTraverse() {
+    return hasSideRouteFreeTraverse() || (state.run?.freeTraverse || 0) > 0;
+  }
   function enterNode(nodeId, parallelPacks = null) {
     state.modal = null;
     const node = state.run.map.cols.flat().find((n) => n.id === nodeId);
@@ -23692,11 +23734,10 @@ var DreamPokerApp = (() => {
     const run = state.run;
     const isFirstColumn = run.currentCol < 0;
     if (isFirstColumn) return true;
-    const currentNode = currentMapNode();
-    const link = currentNode?.links?.find((item) => item.to === node.id);
+    const link = currentParallelLinkTo(node);
     if (!link?.parallel) return true;
     run.sideRouteUsedLayers ||= [];
-    if (hasRelic("side-route-map") && !run.sideRouteUsedLayers.includes(run.layer)) {
+    if (hasSideRouteFreeTraverse()) {
       run.sideRouteUsedLayers.push(run.layer);
       log("侧路地图：本层首次并行穿行不消耗卡包。");
       return true;
@@ -23754,8 +23795,15 @@ var DreamPokerApp = (() => {
   }
   function finishNonCombat() {
     const node = currentMapNode();
-    if (node && !isCombatNode(node) && hasRelic("sage-heart")) gainPack("reward");
-    if (hasRelic("angel-kiss")) state.run.hero.hp = Math.min(state.run.hero.maxHp, state.run.hero.hp + 2);
+    if (node && !isCombatNode(node) && hasRelic("sage-heart")) {
+      const pack = gainPack("reward");
+      log(`贤者之心：获得 ${packLabel(pack.quality)}。`);
+    }
+    if (hasRelic("angel-kiss")) {
+      const beforeHp = state.run.hero.hp;
+      state.run.hero.hp = Math.min(state.run.hero.maxHp, state.run.hero.hp + 2);
+      if (state.run.hero.hp > beforeHp) log(`天使之吻：回复 ${state.run.hero.hp - beforeHp} 点生命。`);
+    }
     if (state.run.currentCol >= 4) advanceLayer();
     else state.screen = "map";
     state.event = null;
@@ -23768,7 +23816,10 @@ var DreamPokerApp = (() => {
       return;
     }
     state.run.layer += 1;
-    if (hasRelic("clock")) state.run.joker += 3;
+    if (hasRelic("clock")) {
+      state.run.joker += 3;
+      log("闹钟：进入下一层获得 3 Joker。");
+    }
     state.run.map = generateLayerMap(state.rng, state.run.layer);
     state.run.currentCol = -1;
     state.run.currentNodeId = null;
@@ -23904,8 +23955,19 @@ var DreamPokerApp = (() => {
       return [spawnEnemy(template, 1, true, true)];
     }
     if (type === "elite") return [spawnEnemy(rng.pick(ELITES), layerScale(), true)];
-    const count = rng.int(1, 2);
-    return Array.from({ length: count }, () => spawnEnemy(rng.pick(MONSTERS), layerScale(), false));
+    const encounter = pickNormalEncounter();
+    return encounter.enemies.map((name) => spawnEnemy(findEnemyTemplate(name), layerScale(), false));
+  }
+  function pickNormalEncounter() {
+    const layer = state.run.layer;
+    const candidates = NORMAL_ENCOUNTERS.filter((encounter) => layer >= (encounter.minLayer || 1) && layer <= (encounter.maxLayer || 99));
+    const total = candidates.reduce((sum, encounter) => sum + (encounter.weight || 1), 0);
+    let roll = state.rng.next() * total;
+    for (const encounter of candidates) {
+      roll -= encounter.weight || 1;
+      if (roll <= 0) return encounter;
+    }
+    return candidates[candidates.length - 1] || { enemies: ["纸牌哨兵"] };
   }
   function findEnemyTemplate(name) {
     const templates = [...MONSTERS, ...ELITES, ...Object.values(BOSSES).flat()];
@@ -23951,8 +24013,11 @@ var DreamPokerApp = (() => {
     return id;
   }
   function spawnEnemy(template, scale = 1, elite = false, boss = false) {
-    const hp = ceil(state.rng.int(template.hp[0], template.hp[1]) * scale);
-    const atk = ceil(state.rng.int(template.atk[0], template.atk[1]) * scale);
+    const layer = state.run?.layer || 1;
+    const hpTuning = boss ? layer === 3 ? 1.28 : layer === 5 ? 1.23 : 1 : elite && layer === 4 ? 1.7 : 1.05;
+    const atkTuning = boss ? layer === 3 ? 1.42 : layer === 5 ? 1.14 : 1 : elite && layer === 4 ? 2.6 : 1.08;
+    const hp = ceil(state.rng.int(template.hp[0], template.hp[1]) * scale * hpTuning);
+    const atk = ceil(state.rng.int(template.atk[0], template.atk[1]) * scale * atkTuning);
     const def = ceil(state.rng.int(template.def[0], template.def[1]) * scale);
     return {
       ...template,
@@ -23973,7 +24038,8 @@ var DreamPokerApp = (() => {
       acted: false,
       defenseDown: 0,
       attackUp: 0,
-      intent: null
+      intent: null,
+      lastIntentType: null
     };
   }
   function rollEnemyIntents() {
@@ -24136,8 +24202,18 @@ var DreamPokerApp = (() => {
   }
   function chooseEnemyIntent(enemy) {
     const skills = enemy.skills || [{ type: "attack" }];
-    const scored = skills.map((skill) => ({ skill, score: scoreEnemySkill(skill, enemy), tie: state.rng.next() })).filter((item) => item.score > -Infinity).sort((a, b) => b.score - a.score || b.tie - a.tie);
+    const viable = skills.map((skill) => ({ skill, score: scoreEnemySkill(skill, enemy), tie: state.rng.next() })).filter((item) => item.score > -Infinity);
+    const hasAlternative = viable.some((item) => item.skill.type !== enemy.lastIntentType);
+    const scored = viable.map((item) => ({
+      ...item,
+      score: item.score - (hasAlternative && item.skill.type === enemy.lastIntentType ? enemyIntentRepeatPenalty(item.skill, enemy) : 0)
+    })).sort((a, b) => b.score - a.score || b.tie - a.tie);
     return describeIntent(scored[0]?.skill || skills[0], enemy);
+  }
+  function enemyIntentRepeatPenalty(skill, enemy) {
+    if (!enemy.lastIntentType || skill.type !== enemy.lastIntentType) return 0;
+    if ((enemy.skills || []).length <= 1) return 0;
+    return 120;
   }
   function scoreEnemySkill(skill, enemy) {
     if (skill.cooldown && (enemy.cooldowns?.[skill.type] || 0) > 0) return -Infinity;
@@ -24149,6 +24225,9 @@ var DreamPokerApp = (() => {
     const enemyHasDebuff = getStatusList(enemy).some((status) => status.kind === "debuff" && status.clearable !== false);
     const heroHasBuff = getStatusList("hero").some((status) => status.kind === "buff" && status.clearable !== false);
     const heroShield = state.battle.shield;
+    const isSolo = allies.length <= 1;
+    const repeatedUtility = enemy.lastIntentType === skill.type && skill.type !== "attack";
+    const shieldRatio = enemy.shield / Math.max(1, enemy.maxHp);
     switch (skill.type) {
       case "multiAttack":
         return 55 + (heroShield <= 0 ? 5 : 0);
@@ -24180,9 +24259,9 @@ var DreamPokerApp = (() => {
       case "guardLowest":
       case "cleanseSelfShield":
       case "cleanseSelfAllDefenseStance":
-        return 25 + (selfBelow50 ? 40 : 0) + (skill.type === "guardAttack" ? 20 : 0);
+        return 25 + (selfBelow50 ? 30 : 0) + (skill.type === "guardAttack" ? 20 : 0) - (isSolo ? 20 : 0) - (repeatedUtility ? 35 : 0) - (shieldRatio > 0.25 ? 25 : 0);
       case "guardAll":
-        return 25 + (allies.some((ally) => ally.shield <= ally.defense * 0.2) ? 45 : 0);
+        return 25 + (allies.some((ally) => ally.shield <= ally.defense * 0.2) ? 45 : 0) - (repeatedUtility ? 30 : 0);
       case "cleanseAlly":
         return enemyHasDebuff ? 90 : -Infinity;
       case "weakenAttack":
@@ -24193,12 +24272,12 @@ var DreamPokerApp = (() => {
       case "vulnerableHero":
         return 45;
       case "growDefense":
-        return 35 + (state.battle.turn <= 3 ? 20 : 0);
+        return 35 + (state.battle.turn <= 3 ? 20 : 0) - (isSolo ? 15 : 0) - (repeatedUtility ? 35 : 0) - (shieldRatio > 0.25 ? 20 : 0);
       case "growDefenseByAttack":
       case "growMaxHpAndDefense":
-        return 35 + (state.battle.turn <= 3 ? 25 : 0);
+        return 35 + (state.battle.turn <= 3 ? 25 : 0) - (repeatedUtility ? 35 : 0);
       case "selfShieldMax":
-        return 25 + (selfBelow50 ? 45 : 0);
+        return 25 + (selfBelow50 ? 35 : 0) - (isSolo ? 15 : 0) - (repeatedUtility ? 35 : 0) - (shieldRatio > 0.25 ? 25 : 0);
       case "attackBuff":
       case "attackBuffByDefense":
       case "allyAttackBuffHalf":
@@ -24430,10 +24509,11 @@ var DreamPokerApp = (() => {
     battle.enemyActionReports = [];
     battle.lastEnemySummary = null;
     battle.heroAfterEnemy = false;
+    const diamondFirst = hasDiamondInitiative(result, cards);
     const units = [
-      { type: "hero", speed: effectiveSpeed("hero"), tie: state.rng.next() },
-      ...liveEnemies().map((enemy) => ({ type: "enemy", enemy, speed: effectiveSpeed(enemy), tie: state.rng.next() }))
-    ].sort((a, b) => b.speed - a.speed || b.tie - a.tie);
+      { type: "hero", speed: effectiveSpeed("hero"), tie: state.rng.next(), initiative: diamondFirst ? 1 : 0 },
+      ...liveEnemies().map((enemy) => ({ type: "enemy", enemy, speed: effectiveSpeed(enemy), tie: state.rng.next(), initiative: 0 }))
+    ].sort((a, b) => b.initiative - a.initiative || b.speed - a.speed || b.tie - a.tie);
     let heroActed = false;
     for (const unit of units) {
       if (unit.type === "enemy") {
@@ -24573,7 +24653,11 @@ var DreamPokerApp = (() => {
     return battle.freeTempConsume > 0 ? "方片齿轮：本次补牌不消耗大背包卡牌" : "从大背包消耗1张重复牌补成第5张";
   }
   function openTempConsumeModal() {
-    if (!canOpenTempConsume()) return;
+    if (!canOpenTempConsume()) {
+      log(`一次性补牌：${tempConsumeHint()}`);
+      render();
+      return;
+    }
     state.modal = { type: "temp-consume" };
     render();
   }
@@ -24961,6 +25045,22 @@ var DreamPokerApp = (() => {
     const entry = Object.entries(suitCounts).filter(([, count]) => count >= 3).sort((a, b) => b[1] - a[1])[0];
     return entry?.[0] || null;
   }
+  function suitTriggerInfo(hand, cards) {
+    const completeSuit = naturalCompleteSuit(hand, cards) || scepterCompleteSuit(hand, cards);
+    const partialSuit = weakSuit(cards, hand);
+    return { completeSuit, partialSuit, suit: completeSuit || partialSuit, full: Boolean(completeSuit) };
+  }
+  function hasDiamondInitiative(hand, cards) {
+    return suitTriggerInfo(hand, cards).suit === "diamond";
+  }
+  function previewImmediateDamageBonus(hand, cards) {
+    const suitCounts = countBy(cards, "suit");
+    const suitInfo = suitTriggerInfo(hand, cards);
+    let bonus = 0;
+    if (suitInfo.suit === "diamond" && !suitInfo.full) bonus -= 0.3;
+    if (hasRelic("diamond-crown") && (suitCounts.diamond || 0) >= 3) bonus += 0.2;
+    return bonus;
+  }
   function applyCompleteSuitEffect(suit) {
     const battle = state.battle;
     const layer = state.run.layer;
@@ -24971,7 +25071,9 @@ var DreamPokerApp = (() => {
     if (suit === "spade") {
       for (const enemy of liveEnemies()) addStatus(enemy, { id: "silence", name: "沉默", kind: "debuff", remaining: 1 });
     }
-    if (suit === "diamond") battle.freeRerolls += 1;
+    if (suit === "diamond") {
+      addStatus("hero", { id: "diamond-complete-reduce", name: "方片完整花色", kind: "buff", stat: "damageTaken", value: -0.2, remaining: 1, clearable: true });
+    }
     if (suit === "club") {
       addStatus("hero", { id: "club-complete-damage", name: "梅花完整", kind: "buff", stat: "damageDealt", value: 0.15, remaining: Infinity, clearable: true, stackable: true });
     }
@@ -24991,7 +25093,7 @@ var DreamPokerApp = (() => {
       }
     }
     if (suit === "diamond") {
-      battle.freeRerollNextTurnPending = true;
+      addStatus("hero", { id: "diamond-weak-damage", name: "方片弱花色", kind: "debuff", stat: "damageDealt", value: -0.3, remaining: 1, clearable: true });
       if (hasRelic("diamond-gear")) battle.freeTempConsume += 1;
     }
     if (suit === "club") {
@@ -25003,17 +25105,15 @@ var DreamPokerApp = (() => {
   }
   function applySuitAndCrownEffects(hand, cards) {
     const suitCounts = countBy(cards, "suit");
-    const completeSuit = naturalCompleteSuit(hand, cards) || scepterCompleteSuit(hand, cards);
-    const partialSuit = weakSuit(cards, hand);
+    const { completeSuit, partialSuit } = suitTriggerInfo(hand, cards);
     if (completeSuit) applyCompleteSuitEffect(completeSuit);
     else if (partialSuit) applyWeakSuitEffect(partialSuit);
     if (hasRelic("heart-crown") && (suitCounts.heart || 0) >= 3) addHeroShield(3 * state.run.layer);
     if (hasRelic("spade-crown") && (suitCounts.spade || 0) >= 3) {
       addStatus("hero", { id: "spade-crown-speed", name: "黑桃皇冠", kind: "buff", stat: "speed", value: 1, remaining: Infinity, clearable: true, stackable: true });
     }
-    if (hasRelic("diamond-crown") && (suitCounts.diamond || 0) >= 3 && (state.battle.diamondCrownTriggers || 0) < 2) {
-      state.battle.diamondCrownTriggers += 1;
-      state.battle.focus += 1;
+    if (hasRelic("diamond-crown") && (suitCounts.diamond || 0) >= 3) {
+      addStatus("hero", { id: "diamond-crown-damage", name: "方片皇冠", kind: "buff", stat: "damageDealt", value: 0.2, remaining: 1, clearable: true });
     }
     if (hasRelic("club-crown") && (suitCounts.club || 0) >= 3) {
       addStatus("hero", { id: "club-crown-next", name: "梅花皇冠", kind: "buff", stat: "clubCrown", value: 1, remaining: 1, pending: true, clearable: true });
@@ -25147,6 +25247,7 @@ var DreamPokerApp = (() => {
     }
     const intent = enemy.intent || describeIntent({ type: "attack" }, enemy);
     resolveEnemyIntent(enemy);
+    enemy.lastIntentType = intent.type;
     recordEnemyAction(enemy, intent, before);
   }
   function enemyActionSnapshot() {
@@ -25567,9 +25668,16 @@ var DreamPokerApp = (() => {
       loot.push({ icon: "💰", title: "1 Joker", text: "燃烧的蜡烛" });
     }
     if (hasRelic("bloodthirsty-saber") && type === "elite") {
-      state.run.bloodthirstySaberStacks = Math.min(10, (state.run.bloodthirstySaberStacks || 0) + 2);
-      state.run.hero.attack += 2;
-      loot.push({ icon: "⚔", title: "攻击力 +2", text: "渴血弯刀" });
+      const beforeStacks = state.run.bloodthirstySaberStacks || 0;
+      const nextStacks = Math.min(10, beforeStacks + 2);
+      const gainedAttack = nextStacks - beforeStacks;
+      state.run.bloodthirstySaberStacks = nextStacks;
+      if (gainedAttack > 0) {
+        state.run.hero.attack += gainedAttack;
+        loot.push({ icon: "⚔", title: `攻击力 +${gainedAttack}`, text: "渴血弯刀" });
+      } else {
+        loot.push({ icon: "⚔", title: "已达上限", text: "渴血弯刀" });
+      }
     }
     const upgrades = gainExp(exp);
     if (type === "elite") {
@@ -25679,7 +25787,8 @@ var DreamPokerApp = (() => {
     if (!pack || state.screen === "battle" || state.screen === "reward") return;
     run.unopenedPacks = run.unopenedPacks.filter((p) => p.id !== packId);
     const gained = [];
-    const cardCount = hasRelic("pack-knife") ? 5 : 4;
+    const hasPackKnife = hasRelic("pack-knife");
+    const cardCount = hasPackKnife ? 5 : 4;
     for (let i = 0; i < cardCount; i++) {
       const card = rollPackCard(pack.quality);
       run.backpack[card.id].count += 1;
@@ -25691,13 +25800,14 @@ var DreamPokerApp = (() => {
       title: `打开${packLabel(pack.quality)}`,
       loot: [
         ...gained.map((label) => ({ icon: "🃏", title: label, text: "加入大背包" })),
+        ...hasPackKnife ? [{ icon: "🃏", title: "额外 1 张牌", text: "传国玉玺" }] : [],
         ...joker ? [{ icon: "💰", title: "1 Joker", text: "额外奖励" }] : []
       ],
-      lines: [`获得：${gained.join("、")}`, joker ? "额外获得 1 Joker" : "未触发额外 Joker"],
+      lines: [`获得：${gained.join("、")}`, hasPackKnife ? "传国玉玺：额外获得 1 张牌。" : null, joker ? "额外获得 1 Joker" : "未触发额外 Joker"].filter(Boolean),
       returnScreen: state.screen
     };
     state.screen = "reward";
-    log(`打开 ${packLabel(pack.quality)}：${gained.join("、")}${joker ? "，额外1 Joker" : ""}。`);
+    log(`打开 ${packLabel(pack.quality)}：${gained.join("、")}${hasPackKnife ? "，传国玉玺额外1张" : ""}${joker ? "，额外1 Joker" : ""}。`);
     render();
   }
   function rollPackCard(quality) {
@@ -25804,7 +25914,11 @@ var DreamPokerApp = (() => {
     }
   }
   function openShop() {
-    if (hasRelic("clearance-doc")) state.run.joker += 3;
+    const isShopNode = currentMapNode()?.type === "shop";
+    if (isShopNode && hasRelic("clearance-doc")) {
+      state.run.joker += 3;
+      log("通关文书：进入商店获得 3 Joker。");
+    }
     state.run.shop = createShop();
     state.screen = "shop";
   }
@@ -25859,12 +25973,12 @@ var DreamPokerApp = (() => {
   function buyShopPack(index) {
     const slot = state.run.shop?.packs[index];
     if (!slot || slot.sold) return;
-    const price = slot.fixed ? 2 : 1;
+    const price = shopPackPrice(slot);
     if (state.run.joker < price) return;
     state.run.joker -= price;
     gainPack(slot.fixed ? slot.quality : rollRewardPackQuality());
     slot.sold = true;
-    log(`购买${slot.fixed ? packLabel(slot.quality) : "随机卡包"}。`);
+    log(`购买${slot.fixed ? packLabel(slot.quality) : "随机卡包"}，消耗 ${price} Joker。`);
     render();
   }
   function sellShopPack(packId) {
@@ -25886,26 +26000,45 @@ var DreamPokerApp = (() => {
     const base = { common: 2, rare: 3, epic: 5, legendary: 7 }[relic?.rarity] || 2;
     return hasRelic("legendary-banknote") ? ceil(base / 2) : base;
   }
+  function shopPackPrice(slot) {
+    const base = slot?.fixed ? 2 : 1;
+    return hasRelic("legendary-banknote") ? ceil(base / 2) : base;
+  }
   function openUpgrade() {
     normalizeRunDefaults();
     const roomId = state.run.currentNodeId || `layer-${state.run.layer}-node-${state.run.nodeCount}`;
+    let firstEntryReward = null;
     if (!state.run.upgradeRoomClaims.includes(roomId)) {
       state.run.upgradeRoomClaims.push(roomId);
       state.run.forgeHammers += 2;
       log("制牌室：获得 2 个锻造锤。");
+      firstEntryReward = {
+        title: "进入制牌室",
+        loot: [{ icon: "🔨", title: "锻造锤 x2", text: "可在大背包中升级卡牌，不消耗重复牌。" }],
+        lines: ["获得 2 个锻造锤。", "锻造锤可在大背包点击“锻造升级”使用。"],
+        returnScreen: "upgrade"
+      };
       if (hasRelic("wild-card")) {
         state.run.wildCardFreeUpgrades = 3;
         log("万能牌：本制牌室前 3 次升级免费。");
+        firstEntryReward.lines.push("万能牌：本制牌室前 3 次升级免费。");
       } else {
         state.run.wildCardFreeUpgrades = 0;
       }
       if (hasRelic("table-trapdoor")) {
         gainPack("reward");
         log("牌桌暗门：获得 1 个随机品质卡包。");
+        firstEntryReward.loot.push({ icon: "📦", title: "随机品质卡包", text: "牌桌暗门奖励。" });
+        firstEntryReward.lines.push("牌桌暗门：获得 1 个随机品质卡包。");
       }
     }
     state.craftSelection = [];
-    state.screen = "upgrade";
+    if (firstEntryReward) {
+      state.reward = firstEntryReward;
+      state.screen = "reward";
+    } else {
+      state.screen = "upgrade";
+    }
   }
   function openBackpack() {
     if (state.screen === "battle" || state.screen === "reward") {
@@ -26713,6 +26846,7 @@ var DreamPokerApp = (() => {
         onPickSuggestion: pickSuggestedHand,
         onReroll: reroll,
         onOpenTempConsume: openTempConsumeModal,
+        onOpenRules: () => openDetailModal("rules", "battle"),
         onClear: () => {
           state.selected = [];
           render();
@@ -26734,7 +26868,7 @@ var DreamPokerApp = (() => {
     const target = getTargetEnemy();
     const rankPower = cards.reduce((sum, card) => sum + getPlayedCardPower(card), 0);
     const pierce = rankPower * 0.03;
-    const bonus = getDamageBonus(hand, cards) + getHeroDamageDealtBonus();
+    const bonus = getDamageBonus(hand, cards) + getHeroDamageDealtBonus() + previewImmediateDamageBonus(hand, cards);
     const events = getDamageEvents(hand);
     const targetDefense = target ? effectiveDefense(target) : 0;
     const heroAtk = state.run.hero.attack + state.battle.aPower + getHeroAttackBonus();
@@ -26779,11 +26913,14 @@ var DreamPokerApp = (() => {
     };
   }
   function renderSpeedOrder() {
+    const cards = selectedCards();
+    const selectedHand = cards.length === 5 ? evaluateHand(cards) : null;
+    const diamondFirst = selectedHand ? hasDiamondInitiative(selectedHand, cards) : false;
     const units = [
-      { label: "持牌人", speed: effectiveSpeed("hero"), kind: "unit-hero", tie: 0 },
-      ...liveEnemies().map((enemy) => ({ label: enemy.name, speed: effectiveSpeed(enemy), kind: "unit-enemy", tie: 1 }))
-    ].sort((a, b) => b.speed - a.speed || a.tie - b.tie);
-    return units.map((unit) => `<b class="${unit.kind}">${unit.label}(${unit.speed})</b>`).join(" → ");
+      { label: "持牌人", speed: effectiveSpeed("hero"), kind: "unit-hero", tie: 0, initiative: diamondFirst ? 1 : 0 },
+      ...liveEnemies().map((enemy) => ({ label: enemy.name, speed: effectiveSpeed(enemy), kind: "unit-enemy", tie: 1, initiative: 0 }))
+    ].sort((a, b) => b.initiative - a.initiative || b.speed - a.speed || a.tie - b.tie);
+    return units.map((unit) => `<b class="${unit.kind}">${unit.label}(${unit.initiative ? "先手" : unit.speed})</b>`).join(" → ");
   }
   function renderCombatSummary() {
     const enemySummary = state.battle?.lastEnemySummary;
@@ -27055,9 +27192,7 @@ var DreamPokerApp = (() => {
   }
   function suitRuleLines(hand, cards) {
     const suitCounts = countBy(cards, "suit");
-    const completeSuit = naturalCompleteSuit(hand, cards) || scepterCompleteSuit(hand, cards);
-    const partialSuit = weakSuit(cards, hand);
-    const suit = completeSuit || partialSuit;
+    const { completeSuit, partialSuit, suit } = suitTriggerInfo(hand, cards);
     if (!suit) return [];
     const label = SUITS.find((item) => item.id === suit)?.label || suit;
     const full = Boolean(completeSuit);
@@ -27067,7 +27202,7 @@ var DreamPokerApp = (() => {
     else lines.push(`${suitCounts[suit]}张${label}，触发弱花色`);
     if (suit === "heart") lines.push(full ? `回复${8 + 2 * layer}生命，获得${8 * layer}护盾` : `回复${6 + layer}生命，获得${5 * layer}护盾`);
     if (suit === "spade") lines.push(full ? "敌方全体沉默1层" : "敌方全体下回合速度-2");
-    if (suit === "diamond") lines.push(full ? "获得1次任意回合免费重抽" : "下回合首次重抽免费");
+    if (suit === "diamond") lines.push(full ? "本次牌型必定先手，本回合受到伤害-20%" : "本次牌型必定先手，本回合造成的牌型攻击伤害-30%");
     if (suit === "club") lines.push(full ? "打出时获得牌型伤害+15%，战斗内永久，可叠层" : "打出时获得攻击+1，战斗内永久，可叠层");
     return lines;
   }
@@ -27225,6 +27360,89 @@ var DreamPokerApp = (() => {
     <div class="modal-actions"><button data-close-modal>关闭</button></div>
   `;
   }
+  function renderBattleRulesModal() {
+    const cards = state.battle ? selectedCards() : [];
+    const hand = cards.length === 5 ? evaluateHand(cards) : null;
+    const target = state.battle ? getTargetEnemy() : null;
+    const layer = state.run.layer;
+    const suitInfo = hand ? suitTriggerInfo(hand, cards) : null;
+    const suitName = suitInfo?.suit ? SUITS.find((item) => item.id === suitInfo.suit)?.label || suitInfo.suit : "";
+    const currentRelics = hand ? previewRelicTriggers(hand, cards) : [];
+    const currentLines = hand ? [
+      `<b>${hand.name}</b>${handRuleLines(hand, cards, target, {
+        heroAtk: state.run.hero.attack + state.battle.aPower + getHeroAttackBonus(),
+        damage: [],
+        targetHpDamage: 0
+      }).map((line) => `<span>${line}</span>`).join("")}`,
+      `<b>${suitInfo?.suit ? `${suitName}${suitInfo.full ? "完整花色" : "弱花色"}` : "花色"}</b>${suitRuleLines(hand, cards).map((line) => `<span>${line}</span>`).join("") || "<span>未触发花色效果</span>"}`,
+      `<b>相关藏品</b>${currentRelics.length ? currentRelics.map((name) => `<span>${name}</span>`).join("") : "<span>本次暂无已拥有藏品触发</span>"}`
+    ] : [];
+    const handRules = [
+      ["高牌", "造成1次单体伤害，点数倍率=最高点数。"],
+      ["一对", "造成2次单体伤害，每次倍率=对子点数；获得护盾=当前攻击×当前层数。"],
+      ["两对", "造成1次群体伤害，倍率=两组对子点数相乘×0.35；获得护盾=对主目标造成的实际生命伤害。"],
+      ["三条", "不造成伤害；立即获得三条点数×3护盾；下回合开始受到伤害-50%，持续1回合。"],
+      ["顺子", "按顺子点数依次造成5段单体伤害。"],
+      ["同花", "造成1次单体伤害，倍率=最高点数×3；同时触发该花色完整效果。"],
+      ["葫芦", "造成1次群体伤害，倍率=三条点数×3+对子点数×2；额外对主目标造成1次三条点数×2伤害。"],
+      ["四条", "造成1次群体伤害，倍率=四条点数×5；额外对主目标造成1次同等伤害；伤害后若主目标生命低于10%，直接斩杀。"],
+      ["同花顺", "按顺子点数造成5段群体伤害；同时触发该花色完整效果。"],
+      ["皇家同花顺", "按10/10/10/10/10造成5段群体伤害；触发完整花色；获得下回合伤害+100%。"]
+    ];
+    const suitRules = [
+      ["红桃", `弱：回复${6 + layer}生命，获得${5 * layer}护盾；完整：回复${8 + 2 * layer}生命，获得${8 * layer}护盾。`],
+      ["黑桃", "弱：敌方全体下回合速度-2；完整：敌方全体沉默1层。先手沉默能阻止尚未行动的敌人。"],
+      ["方片", "弱：本次牌型必定先手，本回合牌型攻击伤害-30%；完整：本次牌型必定先手，本回合受到伤害-20%。"],
+      ["梅花", "弱：获得攻击+1，战斗内永久，可叠层；完整：获得牌型伤害+15%，战斗内永久，可叠层。"]
+    ];
+    const triggerRules = [
+      ["弱花色", "非完整花色时，5张牌里有3或4张同一花色，触发该花色弱效果。多个满足时取数量最多。"],
+      ["完整花色", "同花、同花顺、皇家同花顺触发对应花色完整效果。"],
+      ["权杖藏品", "对应权杖可让4张同花色视为完整花色，但不改变原始牌型。"],
+      ["优先级", "完整花色优先；已经触发完整花色时，不再触发同花色弱效果。"]
+    ];
+    const timingRules = [
+      ["行动顺序", "确认出牌后，持牌人与敌人按当前速度排序；速度相同时随机。"],
+      ["方片先手", "触发方片弱/完整花色时，本次牌型排在敌人前结算，但不改变角色速度。"],
+      ["后手收益", "若敌人先行动，战术沙漏等“后手”效果才会生效；方片先手会放弃这类后手收益。"],
+      ["状态生效", "写明“下回合开始”的状态不会影响本回合；未写明延迟的状态会立即参与本次后续结算。"]
+    ];
+    return `
+      <div class="detail-head">
+        <span class="detail-icon">♠</span>
+        <div>
+          <h2>战斗规则</h2>
+          <p>优先查看完整牌型与花色规则，再结合当前选牌和行动顺序决策。</p>
+        </div>
+      </div>
+      <details class="rule-details" open>
+        <summary>完整牌型规则</summary>
+        <div class="rule-list">${handRules.map(([name, text]) => `<div><strong>${name}</strong><span>${text}</span></div>`).join("")}</div>
+      </details>
+      <details class="rule-details" open>
+        <summary>花色规则</summary>
+        <div class="rule-list">${suitRules.map(([name, text]) => `<div><strong>${name}</strong><span>${text}</span></div>`).join("")}</div>
+      </details>
+      <div class="rule-focus">
+        <strong>${hand ? "当前选牌" : "当前选牌未满5张"}</strong>
+        ${hand ? currentLines.map((line) => `<div>${line}</div>`).join("") : "<span>选满5张后，这里会显示本次牌型与花色结算。</span>"}
+      </div>
+      <div class="rule-summary-grid">
+        <span><b>先看敌人</b>攻击、治疗、召唤和强化决定你是否需要抢先手</span>
+        <span><b>再看花色</b>3张给弱效果，完整同花给完整效果</span>
+        <span><b>最后看牌型</b>牌型决定伤害段数、范围和护盾/减伤收益</span>
+      </div>
+      <details class="rule-details">
+        <summary>花色触发规则</summary>
+        <div class="rule-list">${triggerRules.map(([name, text]) => `<div><strong>${name}</strong><span>${text}</span></div>`).join("")}</div>
+      </details>
+      <details class="rule-details">
+        <summary>行动顺序</summary>
+        <div class="rule-list">${timingRules.map(([name, text]) => `<div><strong>${name}</strong><span>${text}</span></div>`).join("")}</div>
+      </details>
+      <div class="modal-actions"><button data-close-modal>关闭</button></div>
+    `;
+  }
   function renderNodeModal() {
     const node = state.run.map.cols.flat().find((item) => item.id === state.modal?.nodeId);
     if (!node) return `<h2>节点</h2><p class="small">节点不存在。</p><div class="modal-actions"><button data-close-modal>关闭</button></div>`;
@@ -27275,7 +27493,7 @@ var DreamPokerApp = (() => {
   function nodeBlockedReason(node) {
     if (isCombatNode(node) && state.run.album.length !== 26) return "卡册必须正好装入26种牌";
     if (isCombatNode(node) && !isAlbumPlayable()) return "卡册中存在已耗尽的牌";
-    if (getTraverseHint(node, true).includes("并行-2包") && state.run.unopenedPacks.length < 2) return "并行穿行需要2个未开卡包";
+    if (currentParallelLinkTo(node) && !hasFreeParallelTraverse() && state.run.unopenedPacks.length < 2) return "并行穿行需要2个未开卡包";
     return "";
   }
   function nodeRewardText(node) {
@@ -27298,6 +27516,7 @@ var DreamPokerApp = (() => {
   }
   function renderDetailModal() {
     const { kind, id } = state.modal || {};
+    if (kind === "rules") return renderBattleRulesModal();
     if (kind === "intent") {
       const enemy = state.battle?.enemies.find((item) => item.id === id);
       const intent = enemy?.intent;
@@ -27617,7 +27836,7 @@ var DreamPokerApp = (() => {
         currentStep,
         availableCount: available.size,
         unopenedPackCount: state.run.unopenedPacks.length,
-        traverseText: state.run.freeTraverse > 0 ? `免费并行 ${state.run.freeTraverse}` : "并行消耗 2 卡包"
+        traverseText: hasSideRouteFreeTraverse() ? "侧路地图：本层并行免费" : state.run.freeTraverse > 0 ? `免费并行 ${state.run.freeTraverse}` : "并行消耗 2 卡包"
       },
       joker: state.run.joker,
       links: buildMapLinkViews(cols, visible, available),
@@ -27698,7 +27917,7 @@ var DreamPokerApp = (() => {
         available: isAvailable,
         done: Boolean(node.done),
         current: Boolean(isCurrent),
-        parallel: hint.includes("并行"),
+        parallel: Boolean(currentParallelLinkTo(node)),
         stateLabel,
         icon: nodeIcon(node.type),
         assetSrc: nodeAsset(node.type),
@@ -27798,9 +28017,9 @@ var DreamPokerApp = (() => {
   }
   function getTraverseHint(node, isAvailable) {
     if (!isAvailable || state.run.currentCol < 0) return "";
-    const currentNode = currentMapNode();
-    const link = currentNode?.links?.find((item) => item.to === node.id);
+    const link = currentParallelLinkTo(node);
     if (!link?.parallel) return "";
+    if (hasSideRouteFreeTraverse()) return " · 侧路地图免费";
     return state.run.freeTraverse > 0 ? " · 免费并行" : " · 并行-2包";
   }
   function renderReward() {
@@ -28002,23 +28221,25 @@ var DreamPokerApp = (() => {
         };
       }),
       packs: shop.packs.map((slot, index) => {
-        const price = slot.fixed ? 2 : 1;
+        const price = shopPackPrice(slot);
+        const basePrice = slot.fixed ? 2 : 1;
         const label = slot.fixed ? packLabel(slot.quality) : "随机卡包";
         const disabledReason = slot.sold ? "已售出" : state.run.joker < price ? `还差 ${price - state.run.joker} Joker` : "点击购买";
         return {
           index,
           sold: Boolean(slot.sold),
           label,
-          description: slot.fixed ? "固定品质" : "品质按当前层掉落规则随机",
+          description: hasRelic("legendary-banknote") && price < basePrice ? "传说的银票折扣价" : slot.fixed ? "固定品质" : "品质按当前层掉落规则随机",
           price,
           artSrc: packAsset(slot.fixed ? slot.quality : "reward"),
           disabledReason,
           disabled: Boolean(slot.sold || state.run.joker < price)
         };
       }),
-      sellablePacks: sellablePacks.map((pack) => ({ id: pack.id, label: packLabel(pack.quality) })),
+      sellablePacks: sellablePacks.map((pack) => ({ id: pack.id, label: packLabel(pack.quality), sellRewardText: hasRelic("worn-backpack") && !(state.run.wornBackpackSoldLayers || []).includes(state.run.layer) ? "+2 Joker" : "+1 Joker" })),
       refreshText: `刷新 ${nextRefreshCost} Joker`,
       canRefresh: state.run.joker >= nextRefreshCost,
+      sellPackRewardText: hasRelic("worn-backpack") && !(state.run.wornBackpackSoldLayers || []).includes(state.run.layer) ? "本层首次 +2 Joker" : "统一 +1 Joker",
       onRefresh: refreshShop,
       onLeave: continueReward,
       onBuyRelic: buyShopRelic,
@@ -28292,6 +28513,7 @@ var DreamPokerApp = (() => {
     document.querySelectorAll("[data-detail-status]").forEach((button) => button.addEventListener("click", () => openDetailModal("status", button.dataset.detailStatus)));
     document.querySelectorAll("[data-detail-trait]").forEach((button) => button.addEventListener("click", () => openDetailModal("trait", button.dataset.detailTrait)));
     document.querySelectorAll("[data-detail-relic]").forEach((button) => button.addEventListener("click", () => openDetailModal("relic", button.dataset.detailRelic)));
+    document.querySelectorAll("[data-detail-rules]").forEach((button) => button.addEventListener("click", () => openDetailModal("rules", "battle")));
     document.querySelectorAll("[data-close-modal]").forEach((el) => el.addEventListener("click", closeModal));
     document.querySelector("[data-confirm-node]")?.addEventListener("click", confirmNodeModal);
     document.querySelectorAll("[data-parallel-pack]").forEach((button) => button.addEventListener("click", () => adjustParallelPackChoice(button.dataset.parallelPack, Number(button.dataset.parallelPackDelta))));
