@@ -4,12 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>梦境牌局 - 持牌人原型</title>
-    <link rel="preload" as="image" href="./assets/backgrounds/battle-common.jpg" />
-    <link rel="preload" as="image" href="./assets/characters/holder-hero.jpg" />
-    <link rel="stylesheet" href="./assets/app.css?v=20260710-asset-lite" />
+    <link rel="preload" as="image" href="./assets/backgrounds/battle-common.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="./assets/characters/holder-hero.jpg" fetchpriority="high" />
+    <link rel="preload" as="script" href="./assets/app.js?v=20260710-asset-sw1" fetchpriority="high" />
+    <link rel="stylesheet" href="./assets/app.css?v=20260710-asset-sw1" />
   </head>
   <body>
     <div id="app"></div>
-    <script src="./assets/app.js?v=20260710-asset-lite"></script>
+    <script src="./assets/app.js?v=20260710-asset-sw1"></script>
+    <script>
+      if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("./sw.js?v=20260710-asset-sw1").catch(function () {});
+        });
+      }
+    </script>
   </body>
 </html>
