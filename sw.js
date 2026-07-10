@@ -1,12 +1,14 @@
-const CACHE_VERSION = "dream-poker-20260710-asset-sw1";
+const CACHE_VERSION = "dream-poker-20260710-asset-warmup1";
 const CORE_CACHE = `${CACHE_VERSION}-core`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
+const WARMUP_CACHE = CACHE_VERSION;
 
 const CORE_ASSETS = [
   "./",
   "./index.html",
-  "./assets/app.css?v=20260710-asset-sw1",
-  "./assets/app.js?v=20260710-asset-sw1",
+  "./assets/app.css?v=20260710-asset-warmup1",
+  "./assets/app.js?v=20260710-asset-warmup1",
+  "./asset-warmup.js?v=20260710-asset-warmup1",
   "./assets/backgrounds/battle-common.jpg",
   "./assets/characters/holder-hero.jpg"
 ];
@@ -57,7 +59,8 @@ async function networkFirst(request) {
 
 async function staleWhileRevalidate(request) {
   const cache = await caches.open(RUNTIME_CACHE);
-  const cached = await cache.match(request);
+  const warmupCache = await caches.open(WARMUP_CACHE);
+  const cached = await cache.match(request) || await warmupCache.match(request);
   const refresh = fetch(request)
     .then((response) => {
       if (response.ok) cache.put(request, response.clone());
