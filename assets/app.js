@@ -22062,7 +22062,9 @@ var DreamPokerApp = (() => {
         src,
         alt: decorative ? "" : alt,
         "aria-hidden": decorative ? "true" : void 0,
-        "data-art-fit": fit
+        "data-art-fit": fit,
+        loading: "lazy",
+        decoding: "async"
       }
     ) });
   }
@@ -23360,7 +23362,10 @@ var DreamPokerApp = (() => {
   }
   function assetPath(path) {
     const base = ASSET_BASE.endsWith("/") ? ASSET_BASE : `${ASSET_BASE}/`;
-    return `${base}${path}`;
+    return `${base}${optimizedAssetPath(path)}`;
+  }
+  function optimizedAssetPath(path) {
+    return path.replace(/^(assets\/(?:backgrounds|scenes|enemies|bosses|relics|packs|characters)\/.+)\.png$/, "$1.jpg");
   }
   function unitAsset(unit) {
     const slug = UNIT_ASSET_SLUGS[unit?.name];
@@ -23373,7 +23378,8 @@ var DreamPokerApp = (() => {
   }
   function backgroundCssAsset(slug) {
     const file = `backgrounds/${slug}.${OFFICIAL_BACKGROUND_ART.has(slug) ? "png" : "svg"}`;
-    return ASSET_BASE === "./" ? file : assetPath(`assets/${file}`);
+    const path = optimizedAssetPath(`assets/${file}`);
+    return ASSET_BASE === "./" ? path.replace(/^assets\//, "") : assetPath(path);
   }
   function log(message) {
     state.log.unshift(message);
