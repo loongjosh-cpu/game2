@@ -21857,23 +21857,23 @@ var DreamPokerApp = (() => {
         { name: "双面审查官", hp: [20, 25], atk: [10, 11], def: [0, 0], speed: 4, traits: [{ type: "roundEndAttack", amount: 1 }], skills: [{ type: "multiAttack", hits: 2, multiplier: 1.2 }, { type: "drain", ratio: 0.5 }] },
         { name: "生命档案员", hp: [50, 60], atk: [1, 2], def: [30, 30], speed: 2, traits: [{ type: "roundEndHeal", ratio: 0.2 }], skills: [{ type: "hpScaledAttack", ratio: 0.1 }, { type: "growMaxHpAndDefense", hpByAtk: 2.5, defByAtk: 5 }] },
         { name: "迟滞档案员", hp: [30, 35], atk: [5, 6], def: [20, 20], speed: 3, traits: [{ type: "roundStartHeroAttackDown", amount: 2 }], skills: [{ type: "heavyAttack", multiplier: 2 }, { type: "defenseAttack", ratio: 1 }] },
-        { name: "加冕骑士", hp: [30, 35], atk: [5, 6], def: [30, 30], speed: 3, traits: [{ type: "roundEndTeamDefenseByAttack" }], skills: [{ type: "healAllByDefense", ratio: 0.5 }, { type: "attackBuffByDefense", ratio: 0.2, duration: 2 }] },
+        { name: "加冕骑士", hp: [30, 35], atk: [5, 6], def: [30, 30], speed: 3, traits: [{ type: "roundEndTeamDefenseByAttack" }], skills: [{ type: "healAllByDefense", ratio: 0.5 }, { type: "defenseShieldAttack", ratio: 0.5, shieldRatio: 0.2 }] },
         { name: "裂段主教", hp: [40, 50], atk: [5, 6], def: [15, 15], speed: 4, traits: [{ type: "multiHitReduction", reduction: 0.3 }], skills: [{ type: "multiAttack", hits: 2 }, { type: "speedHeavyAttack", speed: 2, multiplier: 1.5 }] },
         { name: "回声铁箱", hp: [55, 65], atk: [3, 4], def: [25, 25], speed: 2, traits: [{ type: "roundStartShieldByDefense", ratio: 0.3 }], skills: [{ type: "defenseAttack", ratio: 0.5 }, { type: "growDefenseByAttack", ratio: 3 }] },
-        { name: "快手庄家", hp: [35, 42], atk: [10, 11], def: [10, 10], speed: 7, traits: [{ type: "fastPressure", bonus: 0.3 }], skills: [{ type: "attack" }, { type: "slowHero", amount: -2, duration: 2 }] },
+        { name: "快手庄家", hp: [23, 28], atk: [8, 10], def: [10, 10], speed: 5, traits: [{ type: "fastPressure", bonus: 0.3 }], skills: [{ type: "attack" }, { type: "slowHero", amount: -2, duration: 2 }] },
         { name: "召牌主教", hp: [45, 55], atk: [4, 5], def: [20, 20], speed: 3, traits: [{ type: "allyDeathHealBuff", healRatio: 0.2, attackRatio: 0.5 }], skills: [{ type: "attack" }, { type: "summon", name: "纸牌哨兵", hpRatio: 0.5, attackRatio: 0.5, speed: 3, limit: 3 }] },
         { name: "印章吞食者", hp: [45, 55], atk: [6, 7], def: [15, 15], speed: 4, traits: [{ type: "roundStartShieldIfDebuffed", ratio: 0.5 }], skills: [{ type: "attackCleanseHeroBuff" }, { type: "cleanseSelfAllDefenseStance", reduction: 0.5 }, { type: "attackWeakenDefenseByAttack", ratio: 1, duration: 2 }] }
       ];
       BOSSES = {
         3: [
-          { name: "铁壁守卫", hp: [240, 280], atk: [18, 22], def: [70, 85], speed: 2, traits: [{ type: "roundStartShieldByDefense", ratio: 0.2 }, { type: "dullArmor", thresholdRatio: 0.5, reduction: 0.2 }], skills: [{ type: "defenseAttack", ratio: 0.4 }, { type: "growDefense", amount: 30 }, { type: "attackSlow", amount: -1, duration: 1, multiplier: 1.5 }, { type: "defenseStance", reduction: 0.5 }] },
+          { name: "铁壁守卫", hp: [240, 280], atk: [15, 18], def: [50, 65], speed: 2, traits: [{ type: "roundStartShieldByDefense", ratio: 0.2 }, { type: "dullArmor", thresholdRatio: 0.5, reduction: 0.2 }], skills: [{ type: "defenseAttack", ratio: 0.4 }, { type: "growDefense", amount: 30 }, { type: "attackSlow", amount: -1, duration: 1, multiplier: 1.5 }, { type: "defenseStance", reduction: 0.5 }] },
           { name: "迅捷术士", hp: [190, 230], atk: [22, 26], def: [20, 30], speed: 9, traits: [{ type: "swiftCaster" }], skills: [{ type: "multiAttack", hits: 2 }, { type: "slowHero", amount: -2, duration: 2 }, { type: "vulnerableHero", bonus: 0.3, duration: 1 }, { type: "selfShieldMax", ratio: 0.2, cleanse: true }] },
-          { name: "召唤母体", hp: [220, 260], atk: [18, 22], def: [35, 45], speed: 3, traits: [{ type: "summonDeathHeal", ratio: 0.1 }], skills: [{ type: "summon", name: "纸牌幼体", hpRatio: 0.15, attackRatio: 0.5, speed: 4, limit: 3 }, { type: "healAlly", flatByAttack: 1 }, { type: "drain", ratio: 0.5 }, { type: "buffSummons", attackRatio: 0.5 }] }
+          { name: "召唤母体", hp: [220, 260], atk: [18, 22], def: [35, 45], speed: 4, traits: [{ type: "summonDeathHeal", ratio: 0.1 }], skills: [{ type: "summon", name: "纸牌幼体", hpRatio: 0.15, attackRatio: 0.5, speed: 1, limit: 3 }, { type: "healAlly", flatByAttack: 1 }, { type: "drain", ratio: 0.5 }, { type: "buffSummons", attackRatio: 0.5 }, { type: "shieldAllFlat", amount: 25 }] }
         ],
         5: [
-          { name: "赌局审判者", hp: [520, 600], atk: [42, 48], def: [45, 60], speed: 5, skills: [{ type: "attack" }, { type: "sealLastHand" }, { type: "attackBuff", amountRatio: 0.3, duration: 2 }, { type: "executeDebuff", multiplier: 2 }] },
-          { name: "王冠吞噬者", hp: [560, 640], atk: [38, 45], def: [65, 80], speed: 4, traits: [{ type: "devourHeroBuffStart" }, { type: "shieldOnDebuff", ratio: 0.2 }], skills: [{ type: "attack" }, { type: "clearHeroBuff", healRatio: 0.1 }, { type: "attackWeakenDefenseByAttack", ratio: 1, duration: 2 }, { type: "selfShieldMax", ratioByDefense: 0.5, cleanseAll: true }] },
-          { name: "终局庄家", hp: [600, 700], atk: [45, 55], def: [50, 65], speed: 6, traits: [{ type: "shuffleRound" }, { type: "shieldOnStraightFlush", ratio: 0.15 }], skills: [{ type: "multiAttack", hits: 2 }, { type: "vulnerableHero", bonus: 0.3, duration: 1 }, { type: "focusTax" }, { type: "attackBuff", amountRatio: 0.5, duration: 2 }, { type: "heavyAttack", multiplier: 2.5, cooldown: 4 }] }
+          { name: "赌局审判者", hp: [450, 500], atk: [38, 45], def: [45, 60], speed: 5, skills: [{ type: "attack" }, { type: "sealLastHand" }, { type: "attackBuff", amountRatio: 0.3, duration: 2 }, { type: "executeDebuff", multiplier: 2 }] },
+          { name: "王冠吞噬者", hp: [300, 420], atk: [38, 45], def: [95, 105], speed: 4, traits: [{ type: "devourHeroBuffStart" }, { type: "shieldOnDebuff", ratio: 0.2 }], skills: [{ type: "attack" }, { type: "clearHeroBuff", healRatio: 0.1 }, { type: "attackWeakenDefenseByAttack", ratio: 1, duration: 2 }, { type: "selfShieldMax", ratioByDefense: 0.5, cleanseAll: true }] },
+          { name: "终局庄家", hp: [520, 600], atk: [45, 55], def: [50, 65], speed: 5, traits: [{ type: "shuffleRound" }, { type: "shieldOnStraightFlush", ratio: 0.15 }], skills: [{ type: "multiAttack", hits: 2 }, { type: "vulnerableHero", bonus: 0.3, duration: 1 }, { type: "focusTax" }, { type: "attackBuff", amountRatio: 0.5, duration: 2 }, { type: "heavyAttack", multiplier: 2.5, cooldown: 4 }] }
         ]
       };
       EVENTS = [
@@ -24045,7 +24045,8 @@ var DreamPokerApp = (() => {
       defenseDown: 0,
       attackUp: 0,
       intent: null,
-      lastIntentType: null
+      lastIntentType: null,
+      nonDamageIntentStreak: 0
     };
   }
   function rollEnemyIntents() {
@@ -24214,7 +24215,37 @@ var DreamPokerApp = (() => {
       ...item,
       score: item.score - (hasAlternative && item.skill.type === enemy.lastIntentType ? enemyIntentRepeatPenalty(item.skill, enemy) : 0)
     })).sort((a, b) => b.score - a.score || b.tie - a.tie);
-    return describeIntent(scored[0]?.skill || skills[0], enemy);
+    const selected = scored[0]?.skill || skills[0];
+    if (shouldForceFallbackAttack(enemy, selected)) return describeIntent({ type: "attack", fallback: true }, enemy);
+    return describeIntent(selected, enemy);
+  }
+  function isDamageIntentType(type) {
+    return [
+      "attack",
+      "multiAttack",
+      "guardAttack",
+      "defenseShieldAttack",
+      "chargedAttack",
+      "defenseAttack",
+      "hpScaledAttack",
+      "speedHeavyAttack",
+      "executeDebuff",
+      "pierceAttack",
+      "drain",
+      "weakenDefense",
+      "attackSlow",
+      "attackWeakenDefenseByAttack",
+      "attackCleanseHeroBuff",
+      "heavyAttack"
+    ].includes(type);
+  }
+  function shouldForceFallbackAttack(enemy, selected) {
+    if (!enemy || !selected || isDamageIntentType(selected.type)) return false;
+    const skills = enemy.skills || [];
+    const hasDamageSkill = skills.some((skill) => isDamageIntentType(skill.type));
+    const isSolo = liveEnemies().length <= 1;
+    if (isSolo && !hasDamageSkill) return true;
+    return (enemy.nonDamageIntentStreak || 0) >= 2 && !hasDamageSkill;
   }
   function enemyIntentRepeatPenalty(skill, enemy) {
     if (!enemy.lastIntentType || skill.type !== enemy.lastIntentType) return 0;
@@ -24243,6 +24274,7 @@ var DreamPokerApp = (() => {
         return 55;
       case "chargedAttack":
       case "defenseAttack":
+      case "defenseShieldAttack":
       case "hpScaledAttack":
       case "speedHeavyAttack":
         return 60;
@@ -24268,6 +24300,8 @@ var DreamPokerApp = (() => {
         return 25 + (selfBelow50 ? 30 : 0) + (skill.type === "guardAttack" ? 20 : 0) - (isSolo ? 20 : 0) - (repeatedUtility ? 35 : 0) - (shieldRatio > 0.25 ? 25 : 0);
       case "guardAll":
         return 25 + (allies.some((ally) => ally.shield <= ally.defense * 0.2) ? 45 : 0) - (repeatedUtility ? 30 : 0);
+      case "shieldAllFlat":
+        return 25 + (allies.some((ally) => ally.shield <= 10) ? 45 : 0) - (isSolo ? 20 : 0) - (repeatedUtility ? 35 : 0);
       case "cleanseAlly":
         return enemyHasDebuff ? 90 : -Infinity;
       case "weakenAttack":
@@ -24377,6 +24411,8 @@ var DreamPokerApp = (() => {
         return { ...skill, text: `攻击1次，伤害约${ceil(enemyIntentAttack(enemy) * enemy.hp * (skill.ratio || 0.1))}` };
       case "defenseAttack":
         return { ...skill, text: `攻击1次，伤害约${ceil(enemy.defense * (skill.ratio || 1))}` };
+      case "defenseShieldAttack":
+        return { ...skill, text: `攻击1次，伤害约${ceil(enemy.defense * (skill.ratio || 0.5))}，获得${ceil(enemy.defense * (skill.shieldRatio || 0.2))}护盾` };
       case "drain":
         return { ...skill, text: `${enemyIntentAttackSummary(enemy, skill)}，恢复${ceil(enemyIntentAttack(enemy) * skill.ratio)}` };
       case "speedBuff":
@@ -24417,6 +24453,8 @@ var DreamPokerApp = (() => {
         return { ...skill, text: "干扰：首次调度费用+1" };
       case "summon":
         return { ...skill, text: "召唤单位" };
+      case "shieldAllFlat":
+        return { ...skill, text: `全体获得${skill.amount || 25}护盾` };
       case "buffSummons":
         return { ...skill, text: "强化召唤物" };
       case "heavyAttack":
@@ -25254,6 +25292,7 @@ var DreamPokerApp = (() => {
     const intent = enemy.intent || describeIntent({ type: "attack" }, enemy);
     resolveEnemyIntent(enemy);
     enemy.lastIntentType = intent.type;
+    enemy.nonDamageIntentStreak = isDamageIntentType(intent.type) ? 0 : (enemy.nonDamageIntentStreak || 0) + 1;
     recordEnemyAction(enemy, intent, before);
   }
   function enemyActionSnapshot() {
@@ -25481,6 +25520,11 @@ var DreamPokerApp = (() => {
       applyHeroRawDamage(enemy, enemy.defense * (intent.ratio || 1));
       return;
     }
+    if (intent.type === "defenseShieldAttack") {
+      enemy.shield += ceil(enemy.defense * (intent.shieldRatio || 0.2));
+      applyHeroRawDamage(enemy, enemy.defense * (intent.ratio || 0.5));
+      return;
+    }
     if (intent.type === "healAllByDefense") {
       for (const ally of liveEnemies()) ally.hp = Math.min(ally.maxHp, ally.hp + ceil(enemy.defense * (intent.ratio || 0.5)));
       return;
@@ -25510,6 +25554,10 @@ var DreamPokerApp = (() => {
     }
     if (intent.type === "summon") {
       summonEnemy(enemy, intent);
+      return;
+    }
+    if (intent.type === "shieldAllFlat") {
+      for (const ally of liveEnemies()) ally.shield += intent.amount || 25;
       return;
     }
     if (intent.type === "buffSummons") {
@@ -26486,8 +26534,10 @@ var DreamPokerApp = (() => {
       guard: "guard",
       guardAll: "guard",
       guardAttack: "guard",
+      defenseShieldAttack: "guard",
       guardAttackBuff: "guard",
       defenseStance: "guard",
+      shieldAllFlat: "guard",
       healAlly: "heal",
       healAllyByAttack: "heal",
       healSelfMax: "heal",
@@ -27139,6 +27189,8 @@ var DreamPokerApp = (() => {
       guard: "🛡",
       guardAll: "🛡",
       guardAttack: "🛡",
+      defenseShieldAttack: "🛡",
+      shieldAllFlat: "🛡",
       healAlly: "❤",
       summon: "👾",
       attackBuff: "✦",
@@ -27624,7 +27676,7 @@ var DreamPokerApp = (() => {
   }
   function intentTargetText(type) {
     if (["guard", "attackBuff", "speedBuff", "shield", "skip"].includes(type)) return "自身";
-    if (["guardAll", "healAlly", "cleanseAlly", "summon"].includes(type)) return "敌方队伍";
+    if (["guardAll", "healAlly", "cleanseAlly", "summon", "shieldAllFlat"].includes(type)) return "敌方队伍";
     if (["aoe", "debuff", "focusTax", "vulnerableHero"].includes(type)) return "持牌人";
     if (["multiAttack", "guardAttack"].includes(type)) return "持牌人，多段结算";
     return "持牌人";
@@ -27716,6 +27768,8 @@ var DreamPokerApp = (() => {
         return `攻击1次，基础伤害约 ${ceil(attack * enemy.hp * (intent.ratio || 0.1))}，按自身当前生命计算。`;
       case "defenseAttack":
         return `攻击1次，基础伤害约 ${ceil(defense * (intent.ratio || 1))}，按自身防御计算。`;
+      case "defenseShieldAttack":
+        return `自身获得 ${ceil(defense * (intent.shieldRatio || 0.2))} 护盾，并攻击1次，基础伤害约 ${ceil(defense * (intent.ratio || 0.5))}，按自身防御计算。`;
       case "clearHeroBuff":
         return `清除持牌人1个可清除增益${intent.healRatio ? `，若成功则自身恢复 ${pct(intent.healRatio)} 最大生命` : ""}。`;
       case "focusTax":
@@ -27728,6 +27782,8 @@ var DreamPokerApp = (() => {
         return "本回合首次调度重抽费用 +1。";
       case "summon":
         return `召唤 ${intent.name || "召唤物"}，上限 ${intent.limit || 3} 个。`;
+      case "shieldAllFlat":
+        return `敌方全体获得 ${intent.amount || 25} 护盾。`;
       case "buffSummons":
         return `强化己方召唤物，使其攻击按自身攻击提升 ${pct(intent.attackRatio, 0.5)}。`;
       default:
@@ -27753,6 +27809,7 @@ var DreamPokerApp = (() => {
       cleanseSelfAllDefenseStance: "净化防御",
       cleanseAlly: "净化",
       summon: "召唤",
+      shieldAllFlat: "群体护盾",
       buffSummons: "强化召唤物",
       attackBuff: "攻击提升",
       attackBuffByDefense: "攻击提升",
@@ -27768,6 +27825,7 @@ var DreamPokerApp = (() => {
       pierceAttack: "穿甲攻击",
       speedHeavyAttack: "高速重击",
       defenseAttack: "防御攻击",
+      defenseShieldAttack: "防御盾击",
       hpScaledAttack: "生命压制",
       drain: "吸取攻击",
       attackSlow: "迟滞攻击",
